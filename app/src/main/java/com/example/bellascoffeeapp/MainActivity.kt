@@ -51,10 +51,10 @@ class MainActivity : ComponentActivity() {
 fun Greeting(){
     var name by remember { mutableStateOf("") }
     var enteredName by remember { mutableStateOf("") }
-    var isVisible by remember { mutableStateOf( true) }
-    AnimatedVisibility(visible = isVisible,
-        enter = fadeIn(initialAlpha = 0.0f,
-            animationSpec = tween(durationMillis = 10000)
+    var introVisible by remember { mutableStateOf( true) }
+    var welcomeVisible by remember { mutableStateOf(false) }
+    AnimatedVisibility(visible = introVisible,
+        enter = fadeIn(tween(1000)
         ),
         exit = fadeOut(animationSpec = tween(durationMillis = 1000))
     )
@@ -92,7 +92,8 @@ fun Greeting(){
                     onClick = {
                         if (name.isNotBlank()) {
                             enteredName = name
-                            isVisible = !isVisible
+                            introVisible = !introVisible
+                            welcomeVisible = !welcomeVisible
                         }
                     },
                     shape = CircleShape,
@@ -107,7 +108,19 @@ fun Greeting(){
             }
         }
     }
+    AnimatedVisibility(visible = welcomeVisible,
+        enter = fadeIn(tween(durationMillis = 3000,delayMillis = 1500))
 
+
+    ) {
+        Column (modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center)
+        {
+            Text(text = "Welcome, $enteredName",
+                fontSize = 20.sp)
+        }
+    }
 }
 
 
