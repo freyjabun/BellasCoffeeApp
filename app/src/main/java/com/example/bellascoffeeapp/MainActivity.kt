@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,12 +51,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(){
     var name by remember { mutableStateOf("") }
-    var enteredName by remember { mutableStateOf("") }
-    var introVisible by remember { mutableStateOf( true) }
-    var welcomeVisible by remember { mutableStateOf(false) }
+    var enteredName by rememberSaveable { mutableStateOf("") }
+    var introVisible by rememberSaveable { mutableStateOf( true) }
+    var welcomeVisible by rememberSaveable { mutableStateOf(false) }
+
     AnimatedVisibility(visible = introVisible,
-        enter = fadeIn(tween(1000)
-        ),
+
         exit = fadeOut(animationSpec = tween(durationMillis = 1000))
     )
     {
@@ -101,7 +102,7 @@ fun Greeting(){
                 )
                 {
                     Icon(
-                        imageVector = Icons.Default.Add,
+                        imageVector = Icons.Default.Check,
                         contentDescription = "Add"
                     )
                 }
@@ -118,7 +119,7 @@ fun Greeting(){
             verticalArrangement = Arrangement.Center)
         {
             Text(text = "Welcome, $enteredName",
-                fontSize = 20.sp)
+                fontSize = 30.sp)
         }
     }
 }
