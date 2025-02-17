@@ -3,8 +3,8 @@ package com.example.bellascoffeeapp.composables
 
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,10 +29,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
 import com.example.bellascoffeeapp.R
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
 
@@ -41,7 +43,6 @@ import com.example.bellascoffeeapp.ui.theme.BellasTheme
 @Composable
 fun BlocksPreview(){
     BellasTheme {
-
         ShopItem(
             R.drawable.finca_la_hermosa,
             "Finca La Hermosa",
@@ -91,16 +92,19 @@ fun TextInputWithButton()
 fun ShopItem(@DrawableRes icon: Int, itemName: String, itemPrice: String, soldOut: Boolean)
 {
     Column (modifier = Modifier
-        .background(BellasTheme.colorScheme.shopBackground)
+        .background(BellasTheme.colorScheme.background)
         .wrapContentWidth()
+        .border(width = 1.dp, color = Color(231, 230, 229))
         .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
         ) {
         Box(modifier = Modifier.padding(vertical = 10.dp))
         {
-            Image(
-                painter = painterResource(icon),
-                contentDescription = "Coffee Image",
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(icon)
+                    .build(),
+                contentDescription = "Coffee Image"
             )
             if (soldOut)
             {
@@ -115,18 +119,28 @@ fun ShopItem(@DrawableRes icon: Int, itemName: String, itemPrice: String, soldOu
                 )
             }
         }
-        Column (
-            modifier = Modifier.align(Alignment.Start),
-            verticalArrangement = Arrangement.spacedBy(5.dp)
-
-        ){
-            Text(text = stringResource(R.string.bcl),
-                style = BellasTheme.typography.labelBella,
-                )
-            Text(text = itemName,
-                style = BellasTheme.typography.labelLarge)
-            Text(text = "$itemPrice kr",
-                style = BellasTheme.typography.labelMedium)
+        Column (modifier = Modifier.align(Alignment.Start)){
+            ItemDetails(itemName, itemPrice)
         }
+    }
+}
+
+@Composable
+private fun ItemDetails(itemName: String, itemPrice: String) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(5.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.bcl),
+            style = BellasTheme.typography.labelBella,
+        )
+        Text(
+            text = itemName,
+            style = BellasTheme.typography.labelLarge
+        )
+        Text(
+            text = "$itemPrice kr",
+            style = BellasTheme.typography.labelMedium
+        )
     }
 }

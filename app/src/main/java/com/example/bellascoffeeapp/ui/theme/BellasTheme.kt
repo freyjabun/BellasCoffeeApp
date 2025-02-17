@@ -10,12 +10,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 private val bellasCoffeeScheme = BellasColorScheme(
-    background = Color.White,
-    onBackground = Purple40,
-    primary = PurpleGrey40,
-    onPrimary = PurpleGrey80,
-    secondary = Color(24, 35, 63),
-    shopBackground = Color(250, 250, 250)
+    background = Color(250,250,250),
+    onBackground = Color(250,250,250),
+    primary = Color(250,250,250),
+    onPrimary = Color(250,250,250),
+    secondary = Color(24, 35, 63)
 )
 
 private val typography = BellasTypography(
