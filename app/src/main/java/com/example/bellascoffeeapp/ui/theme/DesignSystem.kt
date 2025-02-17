@@ -11,7 +11,6 @@ data class BellasColorScheme(
     val primary: Color,
     val onPrimary: Color,
     val secondary: Color,
-    val shopBackground: Color
 )
 
 //typography
@@ -31,7 +30,6 @@ val LocalBellasColorScheme = staticCompositionLocalOf {
         primary = Color.Unspecified,
         onPrimary = Color.Unspecified,
         secondary = Color.Unspecified,
-        shopBackground = Color.Unspecified
     )
 }
 

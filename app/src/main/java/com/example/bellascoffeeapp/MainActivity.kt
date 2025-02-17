@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -36,6 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.ImageLoader
+import coil3.compose.setSingletonImageLoaderFactory
+import coil3.request.crossfade
+import com.example.bellascoffeeapp.composables.ShopItem
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
 
 class MainActivity : ComponentActivity() {
@@ -46,11 +51,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BellasTheme {
+                setSingletonImageLoaderFactory { context ->
+                    ImageLoader.Builder(context)
+                        .crossfade(true)
+                        .build()
+                }
+
                 Scaffold(
                     topBar = {
                         TopAppBar(
                             colors = topAppBarColors(
-                                containerColor = Color(0xFFCCC2DC),
+                                containerColor = BellasTheme.colorScheme.background,
                                 titleContentColor = Color.Black,
                             ),
                             title = {
@@ -61,7 +72,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     Column (modifier = Modifier
                         .padding(innerPadding)){
-                        Greeting()
+                        ShopCoffeeBags()
                     }
                 }
                 }
@@ -69,6 +80,37 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+@Composable
+fun ShopCoffeeBags(){
+    LazyRow () {
+        item {
+            ShopItem(
+                icon = R.drawable.finca_la_hermosa,
+                itemName = "Finca La Hermosa",
+                itemPrice = "175,00",
+                soldOut = true
+            )
+            ShopItem(
+                icon = R.drawable.acacia_core,
+                itemName = "Acacia Core",
+                itemPrice = "150,00",
+                soldOut = false
+            )
+            ShopItem(
+                icon = R.drawable.finca_las_mercedes,
+                itemName = "Finca Las Mercedes",
+                itemPrice = "175.00",
+                soldOut = false
+            )
+            ShopItem(
+                icon = R.drawable.aquiares_estate,
+                itemName = "Aquiares Estate",
+                itemPrice = "150,00",
+                soldOut = true
+            )
+        }
+    }
+}
 
 @Composable
 fun Greeting(){
