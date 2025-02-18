@@ -151,9 +151,3 @@ private fun ItemDetails(itemName: String, itemPrice: String) {
         )
     }
 }
-
-@Composable
-fun NavigationBar(){
-    Row {
-    }
-}
