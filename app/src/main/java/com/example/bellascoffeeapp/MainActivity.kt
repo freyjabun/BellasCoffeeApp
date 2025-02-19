@@ -8,7 +8,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,9 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Badge
@@ -26,7 +23,6 @@ import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -52,10 +48,11 @@ import coil3.ImageLoader
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import com.example.bellascoffeeapp.composables.ShopItem
-import com.example.bellascoffeeapp.model.dataclass.BottomNavigationItem
+import com.example.bellascoffeeapp.composables.screens.Coffee
+import com.example.bellascoffeeapp.composables.screens.Home
+import com.example.bellascoffeeapp.composables.screens.Shop
 import com.example.bellascoffeeapp.model.dataclass.navItems
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
-import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
 
@@ -76,14 +73,7 @@ class MainActivity : ComponentActivity() {
                     mutableStateOf(0)
                 }
 
-                NavHost(
-                    navController = navController,
-                    startDestination = HomeScreen
-                ){
-                    composable<HomeScreen> {
-                        ShopCoffeeBags()
-                    }
-                }
+
 
                 Scaffold(
                     topBar = {
@@ -104,7 +94,8 @@ class MainActivity : ComponentActivity() {
                                     selected = selectedItemIndex == index,
                                     onClick = {
                                         selectedItemIndex = index
-                                        navController.navigate(item.title)
+                                        navController.navigate(item.route)
+                                        println("Navigating to ${item.route}")
                                     },
                                     label = {
                                         Text(text = item.title)
@@ -131,30 +122,28 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ) { innerPadding ->
-                    Column (modifier = Modifier
-                        .padding(innerPadding)
-                        .background(BellasTheme.colorScheme.background)
-                        .verticalScroll(rememberScrollState())){
-
-                        ShopCoffeeBags()
-                        HorizontalDivider(
-                            Modifier.padding(10.dp)
-                        )
-
-                        ShopCoffeeBags()
-                        HorizontalDivider(
-                            Modifier.padding(10.dp)
-                        )
-                        ShopCoffeeBags()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Home, Modifier.padding(innerPadding)
+                    ){
+                        composable<Home> {
+                            Home()
+                        }
+                        composable<Coffee> {
+                            Coffee()
+                        }
+                        composable<Shop> {
+                            Shop()
+                        }
                     }
+
+//                    }
                 }
             }
         }
     }
 }
 
-@Serializable
-object HomeScreen
 
 @Composable
 fun ShopCoffeeBags(){
