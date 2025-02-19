@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -47,7 +46,6 @@ import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
-import com.example.bellascoffeeapp.composables.ShopItem
 import com.example.bellascoffeeapp.composables.screens.Coffee
 import com.example.bellascoffeeapp.composables.screens.Home
 import com.example.bellascoffeeapp.composables.screens.Shop
@@ -83,12 +81,14 @@ class MainActivity : ComponentActivity() {
                                 titleContentColor = Color.Black,
                             ),
                             title = {
-                                Text("Bella's Coffee Lab")
+                                Text(text = "Bella's Coffee App")
                             }
                         )
                     },
                     bottomBar = {
-                        NavigationBar {
+                        NavigationBar (
+                            containerColor = BellasTheme.colorScheme.background
+                        ){
                             navItems.forEachIndexed { index, item ->
                                 NavigationBarItem(
                                     selected = selectedItemIndex == index,
@@ -145,37 +145,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Composable
-fun ShopCoffeeBags(){
-    LazyRow () {
-        item {
-            ShopItem(
-                icon = R.drawable.finca_la_hermosa,
-                itemName = "Finca La Hermosa",
-                itemPrice = "175,00",
-                soldOut = true,
-            )
-            ShopItem(
-                icon = R.drawable.acacia_core,
-                itemName = "Acacia Core",
-                itemPrice = "150,00",
-                soldOut = false
-            )
-            ShopItem(
-                icon = R.drawable.finca_las_mercedes,
-                itemName = "Finca Las Mercedes",
-                itemPrice = "175.00",
-                soldOut = false
-            )
-            ShopItem(
-                icon = R.drawable.aquiares_estate,
-                itemName = "Aquiares Estate",
-                itemPrice = "150,00",
-                soldOut = true
-            )
-        }
-    }
-}
+
 
 @Composable
 fun Greeting(){
