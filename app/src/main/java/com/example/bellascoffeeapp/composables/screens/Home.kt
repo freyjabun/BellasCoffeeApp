@@ -21,11 +21,10 @@ fun Home(){
     ){
 
             Text(text = "Home page",
-            style = BellasTheme.typography.titleMedium)
+            style = BellasTheme.typography.titleMedium
+            )
     }
 }
-
-
 
 @Serializable
 object Home

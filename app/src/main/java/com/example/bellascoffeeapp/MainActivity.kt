@@ -1,5 +1,6 @@
 package com.example.bellascoffeeapp
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,12 +14,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,12 +35,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
@@ -54,7 +59,6 @@ import com.example.bellascoffeeapp.ui.theme.BellasTheme
 
 class MainActivity : ComponentActivity() {
 
-
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,58 +72,76 @@ class MainActivity : ComponentActivity() {
                 }
                 val navController = rememberNavController()
                 var selectedItemIndex by rememberSaveable {
-                    mutableStateOf(0)
+                    mutableIntStateOf(0)
                 }
-
-
+                val configuration = LocalConfiguration.current
 
                 Scaffold(
                     topBar = {
-                        TopAppBar(
-                            colors = topAppBarColors(
-                                containerColor = BellasTheme.colorScheme.background,
-                                titleContentColor = Color.Black,
-                            ),
-                            title = {
-                                Text(text = "Bella's Coffee App")
+                        when (configuration.orientation) {
+                            Configuration.ORIENTATION_PORTRAIT -> {
+                                TopAppBar(
+                                    colors = topAppBarColors(
+                                        containerColor = BellasTheme.colorScheme.background,
+                                        titleContentColor = Color.Black,
+                                    ),
+                                    title = {
+                                        Text(text = "Bella's Coffee App")
+                                    }
+                                )
                             }
-                        )
+                        }
+
                     },
                     bottomBar = {
-                        NavigationBar (
-                            containerColor = BellasTheme.colorScheme.background
-                        ){
-                            navItems.forEachIndexed { index, item ->
-                                NavigationBarItem(
-                                    selected = selectedItemIndex == index,
-                                    onClick = {
-                                        selectedItemIndex = index
-                                        navController.navigate(item.route)
-                                        println("Navigating to ${item.route}")
-                                    },
-                                    label = {
-                                        Text(text = item.title)
-                                    },
-                                    icon = {
-                                        BadgedBox(
-                                            badge = {
-                                                if(item.badgeCount != null) {
-                                                    Badge {
-                                                        Text(text = item.badgeCount.toString())
+                        when (configuration.orientation) {
+                            Configuration.ORIENTATION_PORTRAIT -> {
+                                NavigationBar (
+                                    containerColor = BellasTheme.colorScheme.background
+                                ){
+                                    navItems.forEachIndexed { index, item ->
+                                        NavigationBarItem(
+                                            selected = selectedItemIndex == index,
+                                            onClick = {
+                                                selectedItemIndex = index
+                                                navController.navigate(item.route)
+                                            },
+                                            label = {
+                                                Text(text = item.title)
+                                            },
+                                            icon = {
+                                                BadgedBox(
+                                                    badge = {
+                                                        if(item.badgeCount != null) {
+                                                            Badge {
+                                                                Text(text = item.badgeCount.toString())
+                                                            }
+                                                        } else if (item.hasNews) {
+                                                            Badge()
+                                                        }
                                                     }
-                                                } else if (item.hasNews) {
-                                                    Badge()
+                                                ){
+                                                    Icon(imageVector = if (index == selectedItemIndex){
+                                                        item.selectedIcon
+                                                    }else item.unselectedIcon,
+                                                        contentDescription = item.title)
                                                 }
                                             }
-                                        ){
-                                            Icon(imageVector = if (index == selectedItemIndex){
-                                                item.selectedIcon
-                                            }else item.unselectedIcon,
-                                                contentDescription = item.title)
-                                        }
-                                    }
-                                ) }
+                                        ) }
+                                }
+                            } else -> {
+                                //TODO: NAVIGATION RAIL, SIDE MENU TYPE BEAT
+                                BottomAppBar (
+                                    containerColor = BellasTheme.colorScheme.background,
+                                    modifier = Modifier.height(50.dp)
+                                )
+
+                                {
+
+                                }
+                            }
                         }
+
                     }
                 ) { innerPadding ->
                     NavHost(
@@ -136,8 +158,6 @@ class MainActivity : ComponentActivity() {
                             Shop()
                         }
                     }
-
-//                    }
                 }
             }
         }
