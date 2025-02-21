@@ -1,4 +1,4 @@
-package com.example.bellascoffeeapp.composables
+package com.example.bellascoffeeapp.utils.composables
 
 
 
@@ -8,24 +8,11 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -53,41 +40,6 @@ fun BlocksPreview(){
     }
 }
 
-@Composable
-fun TextInputWithButton()
-{
-    var name by rememberSaveable { mutableStateOf("") }
-    var enteredName by rememberSaveable { mutableStateOf("") }
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(
-            10.dp,
-            alignment = Alignment.CenterHorizontally
-        )
-    ) {
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it
-            }
-        )
-        Button(
-            onClick = {
-                if (name.isNotBlank()) {
-                    enteredName = name
-                }
-            },
-            shape = CircleShape,
-            colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
-        )
-        {
-            Icon(
-                imageVector = Icons.Default.Check,
-                contentDescription = "Add"
-            )
-        }
-    }
-}
 
 @Composable
 fun ShopItem(@DrawableRes icon: Int, itemName: String, itemPrice: String, soldOut: Boolean)

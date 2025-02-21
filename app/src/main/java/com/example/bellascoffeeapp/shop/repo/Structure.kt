@@ -1,8 +1,9 @@
-package com.example.bellascoffeeapp.composables
+package com.example.bellascoffeeapp.shop.repo
 
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import com.example.bellascoffeeapp.R
+import com.example.bellascoffeeapp.utils.composables.ShopItem
 
 @Composable
 fun ShopCoffeeBags(){

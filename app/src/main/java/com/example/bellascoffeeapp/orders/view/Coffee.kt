@@ -1,4 +1,4 @@
-package com.example.bellascoffeeapp.composables.screens
+package com.example.bellascoffeeapp.orders.view
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

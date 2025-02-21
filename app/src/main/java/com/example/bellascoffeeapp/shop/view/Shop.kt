@@ -1,11 +1,11 @@
-package com.example.bellascoffeeapp.composables.screens
+package com.example.bellascoffeeapp.shop.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.bellascoffeeapp.composables.ShopCoffeeBags
+import com.example.bellascoffeeapp.shop.repo.ShopCoffeeBags
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
 import kotlinx.serialization.Serializable
 
