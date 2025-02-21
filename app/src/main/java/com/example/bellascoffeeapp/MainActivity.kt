@@ -9,10 +9,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
@@ -33,11 +36,12 @@ import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
-import com.example.bellascoffeeapp.orders.view.Coffee
 import com.example.bellascoffeeapp.homepage.view.Home
+import com.example.bellascoffeeapp.orders.view.Coffee
+import com.example.bellascoffeeapp.profile.view.Profile
 import com.example.bellascoffeeapp.shop.view.Shop
-import com.example.bellascoffeeapp.utils.navItems
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
+import com.example.bellascoffeeapp.utils.navItems
 
 class MainActivity : ComponentActivity() {
 
@@ -72,8 +76,17 @@ class MainActivity : ComponentActivity() {
                                     ),
                                     title = {
                                         Text(text = "Bella's Coffee App")
+                                    },
+                                    actions = {
+                                        IconButton(onClick = {navController.navigate(Profile)}) {
+                                            Icon(
+                                                imageVector = Icons.Filled.Person,
+                                                contentDescription = "Profile Button"
+                                            )
+                                        }
                                     }
                                 )
+
                             } else -> {
                                 //TODO: NavigationRail or similar behavior
                             }
@@ -102,7 +115,7 @@ class MainActivity : ComponentActivity() {
                                                 navController.navigate(item.route)
                                             },
                                             label = {
-                                                Text(text = item.title)
+                                                Text(text = item.label)
                                             },
                                             icon = {
                                                 BadgedBox(
@@ -119,7 +132,7 @@ class MainActivity : ComponentActivity() {
                                                     Icon(imageVector = if (index == selectedItemIndex){
                                                         item.selectedIcon
                                                     }else item.unselectedIcon,
-                                                        contentDescription = item.title)
+                                                        contentDescription = item.label)
                                                 }
                                             }
                                         ) }
@@ -145,6 +158,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<Shop> {
                             Shop()
+                        }
+                        composable<Profile>{
+                            Profile()
                         }
                     }
                 }
