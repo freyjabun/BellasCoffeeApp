@@ -33,10 +33,10 @@ import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
-import com.example.bellascoffeeapp.composables.screens.Coffee
-import com.example.bellascoffeeapp.composables.screens.Home
-import com.example.bellascoffeeapp.composables.screens.Shop
-import com.example.bellascoffeeapp.model.dataclass.navItems
+import com.example.bellascoffeeapp.orders.view.Coffee
+import com.example.bellascoffeeapp.homepage.view.Home
+import com.example.bellascoffeeapp.shop.view.Shop
+import com.example.bellascoffeeapp.utils.navItems
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
 
 class MainActivity : ComponentActivity() {

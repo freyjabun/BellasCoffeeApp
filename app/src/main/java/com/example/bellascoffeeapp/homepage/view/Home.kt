@@ -1,4 +1,4 @@
-package com.example.bellascoffeeapp.composables.screens
+package com.example.bellascoffeeapp.homepage.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
