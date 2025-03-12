@@ -36,10 +36,14 @@ import coil3.request.crossfade
 import com.example.bellascoffeeapp.orders.view.Coffee
 import com.example.bellascoffeeapp.homepage.view.Home
 import com.example.bellascoffeeapp.shop.view.Shop
+import com.example.bellascoffeeapp.shop.viewmodel.ShopItemViewModel
 import com.example.bellascoffeeapp.utils.navItems
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,7 +148,8 @@ class MainActivity : ComponentActivity() {
                             Coffee()
                         }
                         composable<Shop> {
-                            Shop()
+                            val viewModel = getViewModel<ShopItemViewModel>()
+                            Shop(viewModel)
                         }
                     }
                 }

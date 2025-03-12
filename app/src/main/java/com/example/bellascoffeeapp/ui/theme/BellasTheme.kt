@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 
 private val bellasCoffeeScheme = BellasColorScheme(
     background = Color(250,250,250),
-    onBackground = Color(250,250,250),
+    onBackground = Color(212,212,212),
     primary = Color(250,250,250),
     onPrimary = Color(25,25,50),
     secondary = Color(24, 35, 63),
