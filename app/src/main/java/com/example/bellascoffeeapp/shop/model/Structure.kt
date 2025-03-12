@@ -1,4 +1,4 @@
-package com.example.bellascoffeeapp.shop.repo
+package com.example.bellascoffeeapp.shop.model
 
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
