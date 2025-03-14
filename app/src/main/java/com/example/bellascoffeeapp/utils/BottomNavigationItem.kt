@@ -8,8 +8,8 @@ import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.bellascoffeeapp.orders.view.Coffee
 import com.example.bellascoffeeapp.homepage.view.Home
+import com.example.bellascoffeeapp.orders.view.Coffee
 import com.example.bellascoffeeapp.shop.view.Shop
 
 

@@ -1,7 +1,5 @@
 package com.example.bellascoffeeapp.orders.model
 
-import com.example.bellascoffeeapp.shop.model.ShopItem
-import com.example.bellascoffeeapp.shop.model.ShopItemDTO
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

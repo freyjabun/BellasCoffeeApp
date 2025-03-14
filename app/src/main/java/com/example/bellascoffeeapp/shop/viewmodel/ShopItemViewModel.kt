@@ -1,6 +1,5 @@
 package com.example.bellascoffeeapp.shop.viewmodel
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bellascoffeeapp.shop.model.ShopItem
