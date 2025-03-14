@@ -18,8 +18,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -34,7 +32,8 @@ import coil3.ImageLoader
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import com.example.bellascoffeeapp.homepage.view.Home
-import com.example.bellascoffeeapp.orders.view.Coffee
+import com.example.bellascoffeeapp.orders.view.Order
+import com.example.bellascoffeeapp.orders.view.OrderView
 import com.example.bellascoffeeapp.orders.viewmodel.OrdersViewModel
 import com.example.bellascoffeeapp.shop.view.Shop
 import com.example.bellascoffeeapp.shop.viewmodel.ShopItemViewModel
@@ -63,26 +62,27 @@ class MainActivity : ComponentActivity() {
                 val configuration = LocalConfiguration.current
 
                 Scaffold(
-                    modifier = Modifier.background(BellasTheme.colorScheme.background)
+                    modifier = Modifier
+                        .background(BellasTheme.colorScheme.background)
                         .navigationBarsPadding()
                         .statusBarsPadding(),
-                    topBar = {
-                        when (configuration.orientation) {
-                            Configuration.ORIENTATION_PORTRAIT -> {
-                                TopAppBar(
-                                    colors = topAppBarColors(
-                                        containerColor = BellasTheme.colorScheme.background,
-                                        titleContentColor = Color.Black,
-                                    ),
-                                    title = {
-                                        Text(text = "Bella's Coffee App")
-                                    }
-                                )
-                            } else -> {
-                                //TODO: NavigationRail or similar behavior
-                            }
-                        }
-                    },
+//                    topBar = {
+//                        when (configuration.orientation) {
+//                            Configuration.ORIENTATION_PORTRAIT -> {
+//                                TopAppBar(
+//                                    colors = topAppBarColors(
+//                                        containerColor = BellasTheme.colorScheme.background,
+//                                        titleContentColor = Color.Black,
+//                                    ),
+//                                    title = {
+//                                        Text(text = "Bella's Coffee App")
+//                                    }
+//                                )
+//                            } else -> {
+//                                //TODO: NavigationRail or similar behavior
+//                            }
+//                        }
+//                    },
                     bottomBar = {
                         when (configuration.orientation) {
                             Configuration.ORIENTATION_PORTRAIT -> {
@@ -144,9 +144,9 @@ class MainActivity : ComponentActivity() {
                         composable<Home> {
                             Home()
                         }
-                        composable<Coffee> {
+                        composable<Order> {
                             val viewModel = getViewModel<OrdersViewModel>()
-                            Coffee(viewModel)
+                            OrderView(viewModel)
                         }
                         composable<Shop> {
                             val viewModel = getViewModel<ShopItemViewModel>()

@@ -9,7 +9,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.bellascoffeeapp.homepage.view.Home
-import com.example.bellascoffeeapp.orders.view.Coffee
+import com.example.bellascoffeeapp.orders.view.Order
 import com.example.bellascoffeeapp.shop.view.Shop
 
 
@@ -31,8 +31,8 @@ val navItems = listOf(
         hasNews = false,
     ),
     BottomNavigationItem(
-        title = "Coffee",
-        route = Coffee,
+        title = "Order",
+        route = Order,
         selectedIcon = Icons.Filled.Check,
         unselectedIcon = Icons.Outlined.Check,
         hasNews = false,

@@ -36,7 +36,7 @@ import com.example.bellascoffeeapp.ui.theme.BellasTheme
 import kotlinx.serialization.Serializable
 
 @Composable
-fun Coffee(viewModel : OrdersViewModel){
+fun OrderView(viewModel : OrdersViewModel){
     val orderItems by viewModel.orderItemList.collectAsState()
 
     LaunchedEffect(viewModel) {
@@ -90,4 +90,4 @@ fun OrderItemComposable(item: OrderItem){
 }
 
 @Serializable
-object Coffee
+object Order
