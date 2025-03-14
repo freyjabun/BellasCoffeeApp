@@ -35,6 +35,7 @@ import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import com.example.bellascoffeeapp.orders.view.Coffee
 import com.example.bellascoffeeapp.homepage.view.Home
+import com.example.bellascoffeeapp.orders.viewmodel.OrdersViewModel
 import com.example.bellascoffeeapp.shop.view.Shop
 import com.example.bellascoffeeapp.shop.viewmodel.ShopItemViewModel
 import com.example.bellascoffeeapp.utils.navItems
@@ -145,7 +146,8 @@ class MainActivity : ComponentActivity() {
                             Home()
                         }
                         composable<Coffee> {
-                            Coffee()
+                            val viewModel = getViewModel<OrdersViewModel>()
+                            Coffee(viewModel)
                         }
                         composable<Shop> {
                             val viewModel = getViewModel<ShopItemViewModel>()

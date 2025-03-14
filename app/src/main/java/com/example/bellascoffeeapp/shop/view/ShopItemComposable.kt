@@ -41,24 +41,14 @@ fun ShopItemComposable(item: ShopItem) {
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(item.imageUrl)
                         .build(),
-                    placeholder = painterResource(R.drawable.finca_la_hermosa),
+                    placeholder = painterResource(R.drawable.bellascoffeelab),
                     contentDescription = "Image of ${item.name} bag",
                     contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxSize()
-                        .height(400.dp)
+                    modifier = Modifier.height(400.dp).fillMaxSize()
                         .clip(RoundedCornerShape(10.dp)),
                 )
                 if (item.inStock == false) {
-                    Text(
-                        text = "Sold out",
-                        style = BellasTheme.typography.body,
-                        color = Color.White,
-                        modifier = Modifier
-                            .offset(y = 10.dp, x = (-5).dp)
-                            .background(BellasTheme.colorScheme.secondary)
-                            .padding(5.dp)
-
-                    )
+                    SoldOut()
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -76,4 +66,17 @@ fun ShopItemComposable(item: ShopItem) {
         }
     }
 
+}
+
+@Composable
+private fun SoldOut() {
+    Text(
+        text = "Sold out",
+        style = BellasTheme.typography.body,
+        color = Color.White,
+        modifier = Modifier
+            .offset(y = 15.dp, x = (-28).dp)
+            .background(BellasTheme.colorScheme.secondary)
+            .padding(5.dp)
+    )
 }

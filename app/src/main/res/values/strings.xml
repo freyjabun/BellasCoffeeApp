@@ -2,5 +2,6 @@
     <string name="app_name">BellasCoffeeApp</string>
 
     <string name="bcl">BELLAS COFFEE LAB</string>
-
+    <string name="supabase_url">https://kiymqgbxjbwpyppodggo.supabase.co</string>
+    <string name="supabase_key">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpeW1xZ2J4amJ3cHlwcG9kZ2dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNDcwODAsImV4cCI6MjA1NjkyMzA4MH0.eK_qVxhrDFOYzYo-BogSNRSGlKkRIzA9oe95PPQE6-k</string>
 </resources>
