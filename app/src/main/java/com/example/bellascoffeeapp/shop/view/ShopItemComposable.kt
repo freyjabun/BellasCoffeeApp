@@ -59,7 +59,7 @@ fun ShopItemComposable(item: ShopItem) {
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    text = item.price,
+                    text = item.price.toString() + ",00",
                     style = BellasTheme.typography.labelLarge
                 )
             }

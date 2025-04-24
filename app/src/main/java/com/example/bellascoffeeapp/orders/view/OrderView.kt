@@ -71,7 +71,7 @@ fun OrderItemComposable(item: OrderItem){
                 Text(text = item.name,
                     style = BellasTheme.typography.labelMedium)
                 Spacer(modifier = Modifier.height(5.dp))
-                Text(text = item.price,
+                Text(text = item.price.toString(),
                     style = BellasTheme.typography.labelLarge)
             }
             AsyncImage(

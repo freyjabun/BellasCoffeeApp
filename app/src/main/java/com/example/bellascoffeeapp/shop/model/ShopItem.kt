@@ -5,10 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ShopItemDTO(
+    @SerialName("id")
+    val id: Int,
     @SerialName("item_name")
     val name: String,
     @SerialName("item_price")
-    val price: String,
+    val price: Int,
     @SerialName("item_image")
     val imageUrl: String? = null,
     @SerialName("item_origin")
@@ -19,7 +21,7 @@ data class ShopItemDTO(
 
 data class ShopItem(
     val name: String,
-    val price: String,
+    val price: Int,
     val imageUrl: String? = null,
     val originCountry: String? = null,
     val inStock: Boolean? = null
