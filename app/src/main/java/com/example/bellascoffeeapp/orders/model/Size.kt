@@ -13,13 +13,22 @@ data class SizeDTO(
     val price: Int
 )
 
+@Serializable
 data class Size(
     val id: Int,
     val size: String,
     val price: Int
 )
 
-fun SizeDTO.asDomainModel(): Size{
+@Serializable
+data class OrderItemSize(
+    @SerialName("order_item_id")
+    val orderItemId: Int,
+    @SerialName("size_id")
+    val sizes: SizeDTO
+)
+
+fun SizeDTO.toDomainModel(): Size{
     return Size(
         id = this.id,
         size = this.size,

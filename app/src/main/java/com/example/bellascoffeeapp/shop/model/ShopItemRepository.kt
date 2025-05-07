@@ -10,7 +10,7 @@ interface ShopItemRepository {
 class ShopItemRepositoryImpl(private val db : SupabaseClient) : ShopItemRepository{
 
     override suspend fun getShopItems() : List<ShopItem>{
-        val res = db.postgrest.from("ShopItem")
+        val res = db.postgrest.from("shop_item")
             .select().decodeList<ShopItemDTO>()
         return res.map { it.asDomainModel() }
         }

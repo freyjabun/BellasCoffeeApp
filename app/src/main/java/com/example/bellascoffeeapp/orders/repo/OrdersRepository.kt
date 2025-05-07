@@ -1,7 +1,7 @@
 package com.example.bellascoffeeapp.orders.repo
 
-import com.example.bellascoffeeapp.orders.model.OrderItem
+import com.example.bellascoffeeapp.orders.model.OrderItemDetail
 
 interface OrdersRepository {
-    suspend fun getOrderItems() : List<OrderItem>
+    suspend fun getOrderItems() : List<OrderItemDetail>
 }

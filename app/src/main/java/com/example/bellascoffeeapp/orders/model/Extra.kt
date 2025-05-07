@@ -15,6 +15,7 @@ data class ExtraDTO(
     val price: Int
 )
 
+@Serializable
 data class Extra(
     val id: Int,
     val name: String,
@@ -22,7 +23,16 @@ data class Extra(
     val price: Int
 )
 
-fun ExtraDTO.asDomainModel(): Extra{
+@Serializable
+data class OrderItemExtra(
+    @SerialName("order_item_id")
+    val orderItemId: Int,
+    @SerialName("extra_id")
+    val extraId: Int,
+    val extra: ExtraDTO
+)
+
+fun ExtraDTO.toDomainModel(): Extra{
     return Extra(
         id = this.id,
         name = this.name,

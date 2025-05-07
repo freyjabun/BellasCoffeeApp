@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.example.bellascoffeeapp.R
-import com.example.bellascoffeeapp.orders.model.OrderItem
+import com.example.bellascoffeeapp.orders.model.OrderItemDetail
 import com.example.bellascoffeeapp.orders.viewmodel.OrdersViewModel
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
 import kotlinx.serialization.Serializable
@@ -58,7 +58,7 @@ fun OrderView(viewModel : OrdersViewModel){
 }
 
 @Composable
-fun OrderItemComposable(item: OrderItem){
+fun OrderItemComposable(item: OrderItemDetail){
     Card (colors = CardDefaults.cardColors(containerColor = BellasTheme.colorScheme.onBackground)){
         Row (
             modifier = Modifier
@@ -68,19 +68,19 @@ fun OrderItemComposable(item: OrderItem){
             horizontalArrangement = Arrangement.SpaceBetween,
             ){
             Column (){
-                Text(text = item.name,
+                Text(text = item.item.name,
                     style = BellasTheme.typography.labelMedium)
                 Spacer(modifier = Modifier.height(5.dp))
-                Text(text = item.price.toString(),
+                Text(text = item.item.price.toString(),
                     style = BellasTheme.typography.labelLarge)
             }
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(item.imageUrl)
+                    .data(item.item.imageUrl)
                     .build(),
                 placeholder = painterResource(R.drawable.bellascoffeelab),
                 fallback = painterResource(R.drawable.bellascoffeelab),
-                contentDescription = "Image of ${item.name}",
+                contentDescription = "Image of ${item.item.name}",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.fillMaxHeight()
                     .clip(RoundedCornerShape(10.dp))
