@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,35 +32,49 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.example.bellascoffeeapp.R
-import com.example.bellascoffeeapp.orders.model.OrderItemDetail
+import com.example.bellascoffeeapp.orders.model.DrinkDto
 import com.example.bellascoffeeapp.orders.viewmodel.OrdersViewModel
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
 import kotlinx.serialization.Serializable
 
 @Composable
 fun OrderView(viewModel : OrdersViewModel){
-    val orderItems by viewModel.orderItemList.collectAsState()
+    val drinks by viewModel.drinkList.collectAsState()
+    val extras by viewModel.extrasList.collectAsState()
 
     LaunchedEffect(viewModel) {
         viewModel.getOrders()
     }
 
-    LazyColumn (
-        modifier = Modifier
+    if (drinks.isEmpty()){
+        Column(modifier = Modifier
             .fillMaxSize()
-            .background(BellasTheme.colorScheme.background)
-            .padding(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(15.dp),
-        ){
-        items(orderItems){ item ->
-            OrderItemComposable(item)
+            .background(BellasTheme.colorScheme.background),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            CircularProgressIndicator(modifier = Modifier
+                .size(50.dp))
+        }
+    }
+    else {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BellasTheme.colorScheme.background)
+                .padding(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(15.dp),
+        ) {
+            items(drinks) { item ->
+                OrderItemComposable(item)
+            }
         }
     }
 }
 
 @Composable
-fun OrderItemComposable(item: OrderItemDetail){
+fun OrderItemComposable(drink: DrinkDto){
     Card (colors = CardDefaults.cardColors(containerColor = BellasTheme.colorScheme.onBackground)){
         Row (
             modifier = Modifier
@@ -68,23 +84,24 @@ fun OrderItemComposable(item: OrderItemDetail){
             horizontalArrangement = Arrangement.SpaceBetween,
             ){
             Column (){
-                Text(text = item.item.name,
+                Text(text = drink.name,
                     style = BellasTheme.typography.labelMedium)
                 Spacer(modifier = Modifier.height(5.dp))
-                Text(text = item.item.price.toString(),
+                Text(text = "DKK " + drink.sPrice.toString(),
                     style = BellasTheme.typography.labelLarge)
             }
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(item.item.imageUrl)
+                    .data(drink.imageUrl)
                     .build(),
                 placeholder = painterResource(R.drawable.bellascoffeelab),
                 fallback = painterResource(R.drawable.bellascoffeelab),
-                contentDescription = "Image of ${item.item.name}",
+                contentDescription = "Image of ${drink.name}",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.fillMaxHeight()
                     .clip(RoundedCornerShape(10.dp))
             )
+            println("IMAGE URL FOR DRINK: " + drink.imageUrl)
         }
     }
 }

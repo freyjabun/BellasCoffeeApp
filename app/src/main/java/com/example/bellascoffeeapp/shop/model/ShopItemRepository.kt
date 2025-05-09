@@ -4,14 +4,14 @@ import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 
 interface ShopItemRepository {
-    suspend fun getShopItems() : List<ShopItem>
+    suspend fun getShopItems() : List<CoffeeDto>
 }
 
 class ShopItemRepositoryImpl(private val db : SupabaseClient) : ShopItemRepository{
 
-    override suspend fun getShopItems() : List<ShopItem>{
-        val res = db.postgrest.from("shop_item")
-            .select().decodeList<ShopItemDTO>()
-        return res.map { it.asDomainModel() }
+    override suspend fun getShopItems() : List<CoffeeDto>{
+        val res = db.postgrest.from("coffee")
+            .select().decodeList<Coffee>()
+        return res.map { it.toDto() }
         }
     }

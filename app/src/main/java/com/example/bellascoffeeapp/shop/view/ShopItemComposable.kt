@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.example.bellascoffeeapp.R
-import com.example.bellascoffeeapp.shop.model.ShopItem
+import com.example.bellascoffeeapp.shop.model.CoffeeDto
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
 
 @Composable
-fun ShopItemComposable(item: ShopItem) {
+fun ShopItemComposable(item: CoffeeDto) {
 
 
     Card(colors = CardDefaults.cardColors(containerColor = BellasTheme.colorScheme.onBackground),

@@ -1,43 +1,36 @@
 package com.example.bellascoffeeapp.orders.repo
 
-import com.example.bellascoffeeapp.orders.model.OrderItemDTO
-import com.example.bellascoffeeapp.orders.model.OrderItemDetail
-import com.example.bellascoffeeapp.orders.model.OrderItemExtra
-import com.example.bellascoffeeapp.orders.model.OrderItemSize
-import com.example.bellascoffeeapp.orders.model.asDomainModel
-import com.example.bellascoffeeapp.orders.model.toDomainModel
+import com.example.bellascoffeeapp.orders.model.Drink
+import com.example.bellascoffeeapp.orders.model.DrinkDto
+import com.example.bellascoffeeapp.orders.model.Extra
+import com.example.bellascoffeeapp.orders.model.ExtraDto
+import com.example.bellascoffeeapp.orders.model.toDto
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
-import io.github.jan.supabase.postgrest.query.Columns
+import java.util.SortedMap
 
 class OrdersRepositoryImpl(private val db: SupabaseClient) : OrdersRepository {
 
-    override suspend fun getOrderItems(): List<OrderItemDetail> {
-        val items = db.postgrest.from("order_item")
-            .select().decodeList<OrderItemDTO>()
+    override suspend fun getDrinks(): List<DrinkDto> {
+        val items = db.postgrest.from("drinks")
+            .select().decodeList<Drink>()
 
-        return items.map { item ->
-            val extras = db.postgrest.from("order_item_extras")
-                .select(Columns.list("extras(extra_id, extra_name, extra_type, extra_price)"))
-                {
-                    filter {
-                        eq("order_item_id", item.id)
-                    }
-                }
-                .decodeList<OrderItemExtra>()
-                .map { it.extra.toDomainModel() }
+        return items.map { it.toDto() }
+    }
 
-            val sizes = db.postgrest.from("order_item_sizes")
-                .select(Columns.list("sizes(size_id, size_name, size_price)"))
-                {
-                    filter {
-                        eq("order_item_id", item.id)
-                    }
-                }
-                .decodeList<OrderItemSize>()
-                .map { it.sizes.toDomainModel() }
+    override suspend fun getExtras(): List<ExtraDto> {
+        val extras = db.postgrest.from("extras")
+            .select().decodeList<Extra>()
 
-            OrderItemDetail(item = item.asDomainModel(), extras = extras, sizes = sizes)
-        }
+        return extras.map { it.toDto() }
+    }
+
+    suspend fun getDrinksCategorised(): SortedMap<String, List<DrinkDto>>{
+        val items = db.postgrest.from("drinks")
+            .select().decodeList<Drink>()
+            return items.map { it.toDto() }
+            .groupBy {
+                it.type
+            }.toSortedMap()
     }
 }
