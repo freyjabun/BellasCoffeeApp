@@ -21,6 +21,7 @@ data class Drink(
     val type: String
 )
 
+@Serializable
 data class DrinkDto(
     val name: String,
     val imageUrl: String? = null,

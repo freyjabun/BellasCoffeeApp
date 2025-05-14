@@ -30,6 +30,7 @@ class OrdersRepositoryImpl(private val db: SupabaseClient) : OrdersRepository {
             .select().decodeList<Drink>()
 
         return items.map { it.toDto() }
+
             .groupBy {
                 it.type
             }.toMap()

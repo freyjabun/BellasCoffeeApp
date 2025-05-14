@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.example.bellascoffeeapp.R
@@ -39,6 +40,7 @@ import kotlinx.serialization.Serializable
 @Composable
 fun OrderView(viewModel : OrdersViewModel){
     val categorisedDrinks by viewModel.categorisedDrinksList.collectAsState()
+
 
     LaunchedEffect(viewModel) {
         viewModel.getCategorisedDrinks()

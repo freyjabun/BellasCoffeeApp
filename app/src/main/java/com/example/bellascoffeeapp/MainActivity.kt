@@ -28,18 +28,24 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import coil3.ImageLoader
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import com.example.bellascoffeeapp.homepage.view.Home
 import com.example.bellascoffeeapp.orders.view.Order
+import com.example.bellascoffeeapp.orders.view.OrderDetails
+import com.example.bellascoffeeapp.orders.view.OrderDetailsView
 import com.example.bellascoffeeapp.orders.view.OrderView
+import com.example.bellascoffeeapp.orders.viewmodel.OrderDetailsViewModel
 import com.example.bellascoffeeapp.orders.viewmodel.OrdersViewModel
 import com.example.bellascoffeeapp.shop.view.Shop
 import com.example.bellascoffeeapp.shop.viewmodel.ShopItemViewModel
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
 import com.example.bellascoffeeapp.utils.navItems
+import org.koin.androidx.compose.koinViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.parameter.parametersOf
 
 class MainActivity : ComponentActivity() {
 
@@ -146,7 +152,12 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<Order> {
                             val viewModel = getViewModel<OrdersViewModel>()
-                            OrderView(viewModel)
+                            OrderView(viewModel, navController)
+                        }
+                        composable<OrderDetails> {
+                            val drink = it.toRoute<OrderDetails>()
+                            val viewModel = koinViewModel<OrderDetailsViewModel>(key = drink.hashCode().toString(), parameters = {parametersOf(drink)})
+                            OrderDetailsView(viewModel)
                         }
                         composable<Shop> {
                             val viewModel = getViewModel<ShopItemViewModel>()

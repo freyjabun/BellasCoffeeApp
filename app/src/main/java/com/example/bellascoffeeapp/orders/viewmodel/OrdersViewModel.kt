@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bellascoffeeapp.orders.model.Category
 import com.example.bellascoffeeapp.orders.model.DrinkDto
-import com.example.bellascoffeeapp.orders.model.ExtraDto
 import com.example.bellascoffeeapp.orders.repo.OrdersRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +25,7 @@ class OrdersViewModel(private val repo: OrdersRepository) : ViewModel() {
             _drinksList.value = response
         }
     }
-
+    
     fun getCategorisedDrinks(){
         viewModelScope.launch {
             val response = repo.getDrinksCategorised()
