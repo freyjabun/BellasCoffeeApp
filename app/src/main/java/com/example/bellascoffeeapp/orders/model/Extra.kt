@@ -4,29 +4,29 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ExtraDTO(
-    @SerialName("extra_id")
-    val id: Int,
-    @SerialName("extra_name")
-    val name: String,
-    @SerialName("extra_type")
-    val type: String,
-    @SerialName("extra_price")
-    val price: Int
-)
-
 data class Extra(
+    @SerialName("id")
     val id: Int,
+    @SerialName("name")
     val name: String,
-    val type: String,
-    val price: Int
+    @SerialName("price")
+    val price: Float,
+    @SerialName("type")
+    val type: String
 )
 
-fun ExtraDTO.asDomainModel(): Extra{
-    return Extra(
-        id = this.id,
+@Serializable
+data class ExtraDto(
+    val name: String,
+    val price: Float,
+    val type: String
+)
+
+
+fun Extra.toDto(): ExtraDto{
+    return ExtraDto(
         name = this.name,
-        type = this.type,
-        price = this.price
+        price = this.price,
+        type = this.type
     )
 }
