@@ -2,6 +2,7 @@ package com.example.bellascoffeeapp.utils.dependencies
 
 import com.example.bellascoffeeapp.orders.repo.OrdersRepository
 import com.example.bellascoffeeapp.orders.repo.OrdersRepositoryImpl
+import com.example.bellascoffeeapp.orders.viewmodel.OrderDetailsViewModel
 import com.example.bellascoffeeapp.orders.viewmodel.OrdersViewModel
 import com.example.bellascoffeeapp.shop.model.ShopItemRepository
 import com.example.bellascoffeeapp.shop.model.ShopItemRepositoryImpl
@@ -40,4 +41,10 @@ val appModule = module {
         OrdersViewModel(get())
     }
 
+    viewModel{ drink ->
+        OrderDetailsViewModel(
+            drink = drink.get(),
+            repository = get()
+        )
+    }
 }

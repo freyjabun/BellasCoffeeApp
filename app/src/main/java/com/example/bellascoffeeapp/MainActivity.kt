@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -50,7 +49,6 @@ import org.koin.core.parameter.parametersOf
 class MainActivity : ComponentActivity() {
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -145,7 +143,6 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Home,
                         Modifier.padding(innerPadding),
-
                     ){
                         composable<Home> {
                             Home()
@@ -155,8 +152,11 @@ class MainActivity : ComponentActivity() {
                             OrderView(viewModel, navController)
                         }
                         composable<OrderDetails> {
-                            val drink = it.toRoute<OrderDetails>()
-                            val viewModel = koinViewModel<OrderDetailsViewModel>(key = drink.hashCode().toString(), parameters = {parametersOf(drink)})
+                            val drink: OrderDetails = it.toRoute<OrderDetails>()
+                            val viewModel = koinViewModel<OrderDetailsViewModel>(
+                                key = drink.hashCode().toString(),
+                                parameters = {parametersOf(drink)}
+                            )
                             OrderDetailsView(viewModel)
                         }
                         composable<Shop> {

@@ -2,6 +2,7 @@ package com.example.bellascoffeeapp.orders.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,7 +39,7 @@ import com.example.bellascoffeeapp.ui.theme.BellasTheme
 import kotlinx.serialization.Serializable
 
 @Composable
-fun OrderView(viewModel : OrdersViewModel){
+fun OrderView(viewModel : OrdersViewModel, navController: NavController){
     val categorisedDrinks by viewModel.categorisedDrinksList.collectAsState()
 
 
@@ -46,7 +47,7 @@ fun OrderView(viewModel : OrdersViewModel){
         viewModel.getCategorisedDrinks()
     }
 
-    CategorizedLazyColumn(categorisedDrinks)
+    CategorizedLazyColumn(categorisedDrinks, navController)
 
 }
 
@@ -54,6 +55,7 @@ fun OrderView(viewModel : OrdersViewModel){
 @Composable
 private fun CategorizedLazyColumn(
     categories: List<Category>,
+    navController: NavController
 ){
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -65,7 +67,7 @@ private fun CategorizedLazyColumn(
             DrinkHeader(category.name)
         }
             items(category.items) {
-                drink -> DrinkItem(drink)
+                drink -> DrinkItem(drink, navController)
             }
         }
     }
@@ -88,8 +90,16 @@ private fun DrinkHeader(
 @Composable
 private fun DrinkItem(
     drink: DrinkDto,
+    navController: NavController
 ){
-    Card (colors = CardDefaults.cardColors(containerColor = BellasTheme.colorScheme.onBackground)){
+    Card (Modifier.clickable {
+        navController.navigate(
+            OrderDetails(
+                drink = drink
+            )
+        )
+    }
+        ,colors = CardDefaults.cardColors(containerColor = BellasTheme.colorScheme.onBackground)){
         Row (
             modifier = Modifier
                 .fillMaxWidth()
