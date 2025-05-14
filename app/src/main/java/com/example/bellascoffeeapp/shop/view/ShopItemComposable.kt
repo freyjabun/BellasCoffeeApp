@@ -29,8 +29,6 @@ import com.example.bellascoffeeapp.ui.theme.BellasTheme
 
 @Composable
 fun ShopItemComposable(item: CoffeeDto) {
-
-
     Card(colors = CardDefaults.cardColors(containerColor = BellasTheme.colorScheme.onBackground),
         modifier = Modifier.padding(5.dp)) {
         Column(modifier = Modifier.padding(10.dp)

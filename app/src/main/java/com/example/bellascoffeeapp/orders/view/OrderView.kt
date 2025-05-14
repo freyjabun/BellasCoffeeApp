@@ -1,5 +1,6 @@
 package com.example.bellascoffeeapp.orders.view
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,19 +11,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -32,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.example.bellascoffeeapp.R
+import com.example.bellascoffeeapp.orders.model.Category
 import com.example.bellascoffeeapp.orders.model.DrinkDto
 import com.example.bellascoffeeapp.orders.viewmodel.OrdersViewModel
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
@@ -39,42 +38,55 @@ import kotlinx.serialization.Serializable
 
 @Composable
 fun OrderView(viewModel : OrdersViewModel){
-    val drinks by viewModel.drinkList.collectAsState()
-    val extras by viewModel.extrasList.collectAsState()
+    val categorisedDrinks by viewModel.categorisedDrinksList.collectAsState()
 
     LaunchedEffect(viewModel) {
-        viewModel.getOrders()
+        viewModel.getCategorisedDrinks()
     }
 
-    if (drinks.isEmpty()){
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(BellasTheme.colorScheme.background),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            CircularProgressIndicator(modifier = Modifier
-                .size(50.dp))
+    CategorizedLazyColumn(categorisedDrinks)
+
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun CategorizedLazyColumn(
+    categories: List<Category>,
+){
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+            .background(BellasTheme.colorScheme.background)
+            .padding(10.dp),
+        verticalArrangement = Arrangement.spacedBy(15.dp)
+    ){
+        categories.forEach{category -> stickyHeader {
+            DrinkHeader(category.name)
         }
-    }
-    else {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(BellasTheme.colorScheme.background)
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(15.dp),
-        ) {
-            items(drinks) { item ->
-                OrderItemComposable(item)
+            items(category.items) {
+                drink -> DrinkItem(drink)
             }
         }
     }
 }
 
 @Composable
-fun OrderItemComposable(drink: DrinkDto){
+private fun DrinkHeader(
+    text: String,
+){
+    Text(
+        text = text,
+        style = BellasTheme.typography.titleMedium,
+        modifier = Modifier.fillMaxWidth()
+            .clip(RoundedCornerShape(10.dp))
+            .background(BellasTheme.colorScheme.bellaBlue)
+            .padding(10.dp)
+    )
+}
+
+@Composable
+private fun DrinkItem(
+    drink: DrinkDto,
+){
     Card (colors = CardDefaults.cardColors(containerColor = BellasTheme.colorScheme.onBackground)){
         Row (
             modifier = Modifier
@@ -82,8 +94,8 @@ fun OrderItemComposable(drink: DrinkDto){
                 .padding(10.dp)
                 .height(100.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            ){
-            Column (){
+        ){
+            Column{
                 Text(text = drink.name,
                     style = BellasTheme.typography.labelMedium)
                 Spacer(modifier = Modifier.height(5.dp))
@@ -101,7 +113,6 @@ fun OrderItemComposable(drink: DrinkDto){
                 modifier = Modifier.fillMaxHeight()
                     .clip(RoundedCornerShape(10.dp))
             )
-            println("IMAGE URL FOR DRINK: " + drink.imageUrl)
         }
     }
 }
