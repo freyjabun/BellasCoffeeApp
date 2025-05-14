@@ -26,8 +26,7 @@ class OrdersRepositoryImpl(private val db: SupabaseClient) : OrdersRepository {
     }
 
     suspend fun getDrinksCategorised(): SortedMap<String, List<DrinkDto>>{
-        val items = db.postgrest.from("drinks")
-            .select().decodeList<Drink>()
+        val items = db.postgrest.from("drinks").select().decodeList<Drink>()
             return items.map { it.toDto() }
             .groupBy {
                 it.type
