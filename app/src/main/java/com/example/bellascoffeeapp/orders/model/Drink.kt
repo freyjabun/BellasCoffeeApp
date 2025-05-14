@@ -3,10 +3,6 @@ package com.example.bellascoffeeapp.orders.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-enum class Type(
-
-)
-
 @Serializable
 data class Drink(
     @SerialName("id")
