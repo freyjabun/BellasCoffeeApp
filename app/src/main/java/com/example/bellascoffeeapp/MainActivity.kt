@@ -33,7 +33,7 @@ import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import com.example.bellascoffeeapp.homepage.view.Home
 import com.example.bellascoffeeapp.orders.view.Order
-import com.example.bellascoffeeapp.orders.view.OrderDetails
+import com.example.bellascoffeeapp.orders.view.OrderDetailsRoute
 import com.example.bellascoffeeapp.orders.view.OrderDetailsView
 import com.example.bellascoffeeapp.orders.view.OrderView
 import com.example.bellascoffeeapp.orders.viewmodel.OrderDetailsViewModel
@@ -149,13 +149,13 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<Order> {
                             val viewModel = getViewModel<OrdersViewModel>()
-                            OrderView(viewModel, navController)
+                            OrderView(viewModel, onDrinkClick = {navController.navigate(OrderDetailsRoute(it))})
                         }
-                        composable<OrderDetails> {
-                            val drink: OrderDetails = it.toRoute<OrderDetails>()
+                        composable<OrderDetailsRoute> {
+                            val args: OrderDetailsRoute = it.toRoute<OrderDetailsRoute>()
                             val viewModel = koinViewModel<OrderDetailsViewModel>(
-                                key = drink.hashCode().toString(),
-                                parameters = {parametersOf(drink)}
+                                key = args.hashCode().toString(),
+                                parameters = {parametersOf(args.id)}
                             )
                             OrderDetailsView(viewModel)
                         }

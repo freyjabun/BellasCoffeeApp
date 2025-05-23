@@ -21,24 +21,4 @@ data class Drink(
     val type: String
 )
 
-@Serializable
-data class DrinkDto(
-    val name: String,
-    val imageUrl: String? = null,
-    val sPrice: Float? = null,
-    val mPrice: Float? = null,
-    val lPrice: Float? = null,
-    val type: String
-)
-
-fun Drink.toDto(): DrinkDto{
-    return DrinkDto(
-        name = this.name,
-        imageUrl = this.imageUrl,
-        sPrice = this.sPrice,
-        mPrice = this.mPrice,
-        lPrice = this.lPrice,
-        type = this.type
-    )
-}
 

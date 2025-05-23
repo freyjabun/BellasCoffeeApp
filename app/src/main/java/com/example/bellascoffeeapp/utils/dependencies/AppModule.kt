@@ -41,10 +41,10 @@ val appModule = module {
         OrdersViewModel(get())
     }
 
-    viewModel{ drink ->
+    viewModel{
         OrderDetailsViewModel(
-            drink = drink.get(),
-            repository = get()
+            repository = get(),
+            id = get()
         )
     }
 }

@@ -28,18 +28,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.example.bellascoffeeapp.R
 import com.example.bellascoffeeapp.orders.model.Category
-import com.example.bellascoffeeapp.orders.model.DrinkDto
+import com.example.bellascoffeeapp.orders.model.Drink
 import com.example.bellascoffeeapp.orders.viewmodel.OrdersViewModel
 import com.example.bellascoffeeapp.ui.theme.BellasTheme
 import kotlinx.serialization.Serializable
 
 @Composable
-fun OrderView(viewModel : OrdersViewModel, navController: NavController){
+fun OrderView(
+    viewModel : OrdersViewModel,
+    onDrinkClick: (String) -> Unit
+              ){
     val categorisedDrinks by viewModel.categorisedDrinksList.collectAsState()
 
 
@@ -47,7 +49,7 @@ fun OrderView(viewModel : OrdersViewModel, navController: NavController){
         viewModel.getCategorisedDrinks()
     }
 
-    CategorizedLazyColumn(categorisedDrinks, navController)
+    CategorizedLazyColumn(categorisedDrinks, onDrinkClick)
 
 }
 
@@ -55,7 +57,7 @@ fun OrderView(viewModel : OrdersViewModel, navController: NavController){
 @Composable
 private fun CategorizedLazyColumn(
     categories: List<Category>,
-    navController: NavController
+    onDrinkClick: (String) -> Unit
 ){
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -67,7 +69,7 @@ private fun CategorizedLazyColumn(
             DrinkHeader(category.name)
         }
             items(category.items) {
-                drink -> DrinkItem(drink, navController)
+                drink -> DrinkItem(drink, onDrinkClick)
             }
         }
     }
@@ -89,15 +91,11 @@ private fun DrinkHeader(
 
 @Composable
 private fun DrinkItem(
-    drink: DrinkDto,
-    navController: NavController
+    drink: Drink,
+    onDrinkClick: (String) -> Unit
 ){
     Card (Modifier.clickable {
-        navController.navigate(
-            OrderDetails(
-                drink = drink
-            )
-        )
+        onDrinkClick(drink.id)
     }
         ,colors = CardDefaults.cardColors(containerColor = BellasTheme.colorScheme.onBackground)){
         Row (
