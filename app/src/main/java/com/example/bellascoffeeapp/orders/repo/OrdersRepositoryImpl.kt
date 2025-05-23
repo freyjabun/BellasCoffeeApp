@@ -32,7 +32,7 @@ class OrdersRepositoryImpl(private val db: SupabaseClient) : OrdersRepository {
             }.toMap()
             .map {
                 Category(
-                    name = it.key.toString(),
+                    name = it.key,
                     items = it.value
                 )
             }
